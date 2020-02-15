@@ -155,9 +155,9 @@ def fastExponentialAlgorithm(a,b):
         qm = (qm*qm) % a
         if(vBin[i]==1):
             # 这边算是等价了，效率高了不少
-            qm.pol.insert(0,0)
-            qm = qm % a
-            # qm = (qm * Qx) % a
+            # qm.pol.insert(0,0)
+            # qm = qm % a
+            qm = (qm * Qx) % a
         if qm.is_zero():
             break
     qm = qm % a
