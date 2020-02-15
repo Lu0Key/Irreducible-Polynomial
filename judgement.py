@@ -139,25 +139,22 @@ def EuclideanAlgorithm(a,b):
 # 快速指数算法
 def fastExponentialAlgorithm(a,b):
     sum = a.ord**b
-    # vBin = []
+    vBin = []
     Q1 = Polynomial(5,[1])
     Qx = Polynomial(5,[0,1])
     qm = Q1
     
     sum = sum -1
-    # while(sum!=0):
-    #     vBin.append(sum % 2)
-    #     sum = sum//2
-    # for i in range((len(vBin)-1),-1,-1):
-        # qm = (qm*qm) % a
-        # if(vBin[i]):
-        #     qm = (qm * Qx) % a
-        # if qm.is_zero:
-        #     break
-    l = [0]*sum
-    l.append(1) 
-    pp = Polynomial(5,l)
-    qm = pp % a
+    while(sum!=0):
+        vBin.append(sum % 2)
+        sum = sum//2
+    for i in range((len(vBin)-1),-1,-1):
+        qm = (qm*qm) % a
+        if(vBin[i]==1):
+            qm = (qm * Qx) % a
+        if qm.is_zero():
+            break
+    qm = qm % a
     
     return qm
 
