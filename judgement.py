@@ -50,7 +50,7 @@ class Polynomial :
            return True
        Q1 = Polynomial(5,[1]) # 多项式 1
         # step 1
-       if((fastExponentialAlgorithm(p,len(self.pol)-1)==Q1)==False):     
+       if((fastExponentialAlgorithm(p,pOrd)==Q1)==False):     
            return False
         # -----------------------
         # step 2
@@ -71,7 +71,7 @@ class Polynomial :
            ll.append(1)
            pd = Polynomial(5,ll)
            pd.pol[0]=-1
-           if(((EuclideanAlgorithm(pd, p) == Q1 ) == False) or ((EuclideanAlgorithm(p, pd) == Q1 ) == False) ):
+           if ((EuclideanAlgorithm(p, pd) == Q1 ) == False):
                return False
         # ------------------------------------
        return True
@@ -151,7 +151,10 @@ def fastExponentialAlgorithm(a,b):
     for i in range((len(vBin)-1),-1,-1):
         qm = (qm*qm) % a
         if(vBin[i]==1):
-            qm = (qm * Qx) % a
+            # 这边算是等价了，效率高了不少
+            qm.pol.insert(0,0)
+            qm = qm % a
+            # qm = (qm * Qx) % a
         if qm.is_zero():
             break
     qm = qm % a
@@ -217,38 +220,10 @@ def calc(value):
     result.reverse()
     return result
 
-# a = Polynomial(5, [1,4,3,0,1])
-# if a.is_irr():
-#     print('不可约')
-# else:
-#     print('可约')
 
-# with open('res.txt', 'w') as f:
-#     sum = 0
-#     for i in range(5):
-#         a = [1]
-#         a.insert(0,i)
-#         for j in range(5):
-#             a.insert(0,j)
-#             for k in range(5):
-#                 a.insert(0,k)
-#                 for m in range(5):
-#                     a.insert(0,m)
-#                     c = a.copy()
-#                     d = a.copy()
-#                     d.reverse()
-#                     b = Polynomial(5, c)
-#                     if b.is_irr() :
-#                          f.write(str(d)+'\n')
-#                          sum = sum +1
-#                     a.pop(0)
-#                 a.pop(0)
-#             a.pop(0)
-#         a.pop(0)
-#     a.pop(0)
-#     f.write('----------------\n')
-#     f.write('sum='+str(sum))
-
+# --------------------------------
+# 结果
+# --------------------------------
 n = int(input("请输入你想要的多项式次数\n"))
 start = pow(5,n)
 end = start*2
@@ -274,3 +249,22 @@ with open('res.txt','w') as f:
 time_end = time.time()    #结束计时
 time_c= time_end - time_start   #运行所花时间
 print('time cost', time_c, 's')
+
+# --------------------------------
+# test
+# --------------------------------
+
+# time_start = time.time() #开始计时
+# a = Polynomial(5,[2,1,0,0,0,0,1])
+# if a.is_irr():
+#     print('--------------------------------')
+#     print('True')
+#     print('--------------------------------')
+# else:
+#     print('--------------------------------')
+#     print('False')
+#     print('--------------------------------')
+
+# time_end = time.time()    #结束计时
+# time_c= time_end - time_start   #运行所花时间
+# print('time cost', time_c, 's')
