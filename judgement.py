@@ -43,7 +43,8 @@ class Polynomial :
 
     # 判断多项式是否不可约
     def is_irr(self):
-       p = Polynomial(5, self.pol)
+       pol = self.pol.copy()
+       p = Polynomial(5, pol)
        vFac = []
        pOrd = len(self.pol)-1 # 多项式的次数
        if pOrd == 1:
@@ -67,11 +68,13 @@ class Polynomial :
         # step 3
        vFac = factorization(len(self.pol)-1)
        for i in range(len(vFac)):
+           step3pol = self.pol.copy()
+           pb = Polynomial(5,step3pol)
            ll = [0]*(5**(pOrd// vFac[i])-1)
            ll.append(1)
            pd = Polynomial(5,ll)
            pd.pol[0]=-1
-           if ((EuclideanAlgorithm(p, pd) == Q1 ) == False):
+           if ((EuclideanAlgorithm(pb, pd) == Q1 ) == False):
                return False
         # ------------------------------------
        return True
