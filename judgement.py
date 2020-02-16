@@ -35,7 +35,7 @@ class Polynomial :
             self.pol[o] = sum
             i= i+1     
 
-
+    # 
     def is_zero(self):
         if (len(self.pol)==0):
             return True
@@ -50,7 +50,9 @@ class Polynomial :
        if pOrd == 1:
            return True
        Q1 = Polynomial(5,[1]) # 多项式 1
+        # ---------------------------------   
         # step 1
+        # 
        if((fastExponentialAlgorithm(p,pOrd)==Q1)==False):     
            return False
         # -----------------------
@@ -68,12 +70,13 @@ class Polynomial :
         # step 3
        vFac = factorization(len(self.pol)-1)
        for i in range(len(vFac)):
+           # 这里还有很大的优化空间    
            step3pol = self.pol.copy()
            pb = Polynomial(5,step3pol)
            ll = [0]*(5**(pOrd// vFac[i])-1)
            ll.append(1)
            pd = Polynomial(5,ll)
-           pd.pol[0]=-1
+           pd.pol[0]=pd.pol[0]-1
            if ((EuclideanAlgorithm(pb, pd) == Q1 ) == False):
                return False
         # ------------------------------------
@@ -82,6 +85,7 @@ class Polynomial :
 
 
     # 判断是否为本原多项式
+    # 没有需求我就没写了
     def is_pri(self):
         pass
 
@@ -144,9 +148,8 @@ def fastExponentialAlgorithm(a,b):
     sum = a.ord**b
     vBin = []
     Q1 = Polynomial(5,[1])
-    Qx = Polynomial(5,[0,1])
+    # Qx = Polynomial(5,[0,1])
     qm = Q1
-    
     sum = sum -1
     while(sum!=0):
         vBin.append(sum % 2)
@@ -155,9 +158,10 @@ def fastExponentialAlgorithm(a,b):
         qm = (qm*qm) % a
         if(vBin[i]==1):
             # 这边算是等价了，效率高了不少
-            # qm.pol.insert(0,0)
-            # qm = qm % a
-            qm = (qm * Qx) % a
+            qm.pol.insert(0,0)
+            qm = qm % a
+            # 下面这个比较慢
+            # qm = (qm * Qx) % a
         if qm.is_zero():
             break
     qm = qm % a
@@ -184,6 +188,9 @@ def is_prime_number(n):
         if flag > 0:
             return False
     return True
+
+# ----------------------------
+# 生成多项式的list
 
 def trans_map(cint):
     if cint < 0:
